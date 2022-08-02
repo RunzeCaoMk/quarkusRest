@@ -4,15 +4,15 @@ import com.github.javafaker.Faker;
 
 import java.io.Serializable;
 
-public class Item implements Serializable {
+public class TripCountry implements Serializable {
     private String id;
     private String name;
     private String currency;
 
-    public Item() {
+    public TripCountry() {
     }
 
-    public Item(String id, String name, String currency) {
+    public TripCountry(String id, String name, String currency) {
         this.id = id;
         this.name = name;
         this.currency = currency;
