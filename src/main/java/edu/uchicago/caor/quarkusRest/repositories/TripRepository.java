@@ -112,8 +112,6 @@ public class TripRepository {
     }
 
     public List<TripCountry> paged(int page) {
-//        BasicDBObject query = new BasicDBObject();
-//        query.put("name", name);
         List<TripCountry> trip = new ArrayList<>();
         try {
             // find(query)
@@ -126,6 +124,7 @@ public class TripRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (trip.size() == 0) return null;
         return trip;
     }
 
