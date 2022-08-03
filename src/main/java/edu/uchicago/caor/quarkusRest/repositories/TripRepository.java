@@ -73,7 +73,7 @@ public class TripRepository {
     }
 
     // CRUD - U: update a specific country base on name and id
-    public TripCountry update(String id, String name, String currency) {
+    public TripCountry update(String name, String id, String currency) {
         // delete the old one
         delete(name, id);
         // insert new one
