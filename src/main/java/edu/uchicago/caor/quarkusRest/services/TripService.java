@@ -3,11 +3,13 @@ package edu.uchicago.caor.quarkusRest.services;
 import edu.uchicago.caor.quarkusRest.models.TripCountry;
 import edu.uchicago.caor.quarkusRest.repositories.TripRepository;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.NotSupportedException;
 import java.util.List;
 
+@ApplicationScoped
 public class TripService {
     @Inject
     TripRepository tripRepository;
@@ -32,8 +34,8 @@ public class TripService {
         return item;
     }
     // get all the record form DB
-    public List<TripCountry> getall() {
-        List<TripCountry> items = tripRepository.getall();
+    public List<TripCountry> getAll() {
+        List<TripCountry> items = tripRepository.getAll();
         if (items == null || items.isEmpty()) {
             throw new NotFoundException("There is no record in the DB");
         }
@@ -61,8 +63,5 @@ public class TripService {
         }
         return tripRepository.delete(id);
     }
-
-
-
 
 }

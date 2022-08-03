@@ -70,7 +70,7 @@ public class TripRepository {
         return items.get(0);
     }
 
-    public List<TripCountry> getall() {
+    public List<TripCountry> getAll() {
         FindIterable<Document> documents = getCollection().find();
 
         List<TripCountry> items = new ArrayList<>();
@@ -79,7 +79,7 @@ public class TripRepository {
         }
 
         //this will produce a 404 not found
-        if (items.size() != 1) return null;
+        if (items.size() == 0) return null;
 
         return items;
     }

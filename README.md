@@ -1,5 +1,10 @@
 # quarkusRest Project
 
+## To use MongoDB:
+```shell script
+docker run -ti --rm -d -p 27017:27017 mongo:4.0
+```
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .

@@ -22,8 +22,8 @@ public class TripResource {
     }
 
     @GET
-    public List<TripCountry> getall() {
-        return tripService.getall();
+    public List<TripCountry> getAll() {
+        return tripService.getAll();
     }
 
     @GET
