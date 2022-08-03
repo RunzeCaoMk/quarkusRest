@@ -35,15 +35,14 @@ public class TripRepository {
 
         Faker faker = new Faker();
         getCollection().insertMany(
-            Stream.generate(() -> new TripCountry(
-                                    UUID.randomUUID().toString(),
-                                    faker.country().name(),
-                                    faker.country().currency())
-                    )
-                    .peek(trip -> System.out.println(trip))
-                    .map(trip -> item2doc(trip))
-                    .limit(100).collect(Collectors.toList())
-
+                Stream.generate(() -> new TripCountry(
+                                UUID.randomUUID().toString(),
+                                faker.country().name(),
+                                faker.country().currency())
+                        )
+                        .peek(trip -> System.out.println(trip))
+                        .map(trip -> item2doc(trip))
+                        .limit(1000).collect(Collectors.toList())
         );
     }
 
@@ -54,9 +53,8 @@ public class TripRepository {
     }
 
     // CRUD - R: get a specific country base on name and id
-    public TripCountry get(String name, String id) {
+    public TripCountry get(String id) {
         BasicDBObject query = new BasicDBObject();
-        query.put("name", name);
         query.put("id", id);
 
         FindIterable<Document> documents = getCollection().find(query);
@@ -72,10 +70,24 @@ public class TripRepository {
         return items.get(0);
     }
 
+    public List<TripCountry> getall() {
+        FindIterable<Document> documents = getCollection().find();
+
+        List<TripCountry> items = new ArrayList<>();
+        for (Document document : documents) {
+            items.add(doc2item(document));
+        }
+
+        //this will produce a 404 not found
+        if (items.size() != 1) return null;
+
+        return items;
+    }
+
     // CRUD - U: update a specific country base on name and id
     public TripCountry update(String name, String id, String currency) {
         // delete the old one
-        delete(name, id);
+        delete(id);
         // insert new one
         TripCountry tc = new TripCountry(id, name, currency);
         add(tc);
@@ -83,9 +95,8 @@ public class TripRepository {
     }
 
     // CRUD - D: delete a specific country base on name and id
-    public TripCountry delete(String name, String id) {
+    public TripCountry delete(String id) {
         BasicDBObject query = new BasicDBObject();
-        query.put("name", name);
         query.put("id", id);
 
         FindIterable<Document> documents = getCollection().find(query);
@@ -100,13 +111,13 @@ public class TripRepository {
         return doc2item(firstDocument);
     }
 
-    public List<TripCountry> paged(String name, int page){
-        BasicDBObject query = new BasicDBObject();
-        query.put("name", name);
+    public List<TripCountry> paged(int page) {
+//        BasicDBObject query = new BasicDBObject();
+//        query.put("name", name);
         List<TripCountry> trip = new ArrayList<>();
         try {
-            MongoCursor<Document> cursor =
-                    getCollection().find(query).skip(PAGE_SIZE * (page - 1)).limit(PAGE_SIZE).iterator();
+            // find(query)
+            MongoCursor<Document> cursor = getCollection().find().skip(PAGE_SIZE * (page - 1)).limit(PAGE_SIZE).iterator();
             while (cursor.hasNext()) {
                 Document document = cursor.next();
                 trip.add(doc2item(document));
