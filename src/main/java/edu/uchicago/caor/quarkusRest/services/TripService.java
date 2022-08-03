@@ -45,13 +45,12 @@ public class TripService {
     }
 
     // CRUD - U: update a specific country base on name and id
-    public TripCountry update(String name, String id,  String currency) {
-        // delete the old one
-        delete(id);
-        // insert new one
-        TripCountry tc = new TripCountry(id, name, currency);
-        add(tc);
-        return tc;
+    public TripCountry update(String id, String name, String currency) {
+        TripCountry item = tripRepository.update(id, name, currency);
+        if (item == null){
+            throw new NotFoundException("The TripCountry with id " + id + " was not updated correctly");
+        }
+        return item;
     }
 
     // CRUD - D: delete a specific country base on name and id

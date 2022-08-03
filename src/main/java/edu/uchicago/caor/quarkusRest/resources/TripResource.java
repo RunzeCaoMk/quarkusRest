@@ -17,14 +17,15 @@ public class TripResource {
     TripService tripService;
 
     @POST
-    public TripCountry add(TripCountry favoriteItem){
-        return tripService.add(favoriteItem);
+    public TripCountry add(TripCountry tripCountry){
+        return tripService.add(tripCountry);
     }
 
     @GET
     public List<TripCountry> getall() {
         return tripService.getall();
     }
+
     @GET
     @Path("{id}")
     public TripCountry get(@PathParam("id") String id) {
